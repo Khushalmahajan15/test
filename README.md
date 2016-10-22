@@ -4,4 +4,4 @@ delete this
 I am git freshman
 Hello, World !
 and add this
-![miigo](http://imgur.com/a/XgYlv.jpg)
+![miigo](http://imgur.com/cO4tmq7.jpg)
