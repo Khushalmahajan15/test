@@ -96,13 +96,6 @@ function! Pair( part )
 	endif
 endfunction
 
-" test--------
-func! MakeProject()
-	exec "!make"
-	exec "!./%<"
-endf
-
-
 " expand( "%:e" )
 func! Compile()
 	exec "w"
@@ -111,7 +104,13 @@ func! Compile()
 		call CompileC()
 	elseif l:exp == 'py'
 		call CompilePython()
+	elseif l:exp == 'java'
+		call CompileJava()
 	endif
+endf
+
+func! CompileJava()
+	exec "!javac % && java %<"
 endf
 
 func! CompilePython()
@@ -121,6 +120,14 @@ endf
 func! CompileC()
 	exec "!gcc % -o %<.out && ./%<.out"
 endf
+" test--------
+func! MakeProject()
+	exec "!make"
+	exec "!./%<"
+endf
+
+
+
 " ------------
 
 inoremap } <Esc>:call Pair("}")<cr>a
@@ -144,6 +151,7 @@ let g:airline_theme='dark'
 let g:tagbar_left = 1
 
 nmap <F8> :TagbarToggle<CR>
+autocmd VimEnter * nested :TagbarOpen
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 colorscheme molokai
