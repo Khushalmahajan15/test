@@ -20,6 +20,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
+"Plugin 'file:///home/jackgrence/.vim/plugin/eclim.vim'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -110,11 +111,16 @@ func! Compile()
 endf
 
 func! CompileJava()
-	exec "!javac % && java %<"
+	exec "!sed -e 's/$/\r/' % > ms_% && javac -d . % && java %<"
 endf
 
 func! CompilePython()
 	exec "!python %"
+endf
+
+func! CompilePython3()
+	exec "w"
+	exec "!python3 %"
 endf
 
 func! CompileC()
@@ -138,6 +144,7 @@ inoremap [ []<Esc>i
 inoremap ] <Esc>:call Pair("]")<cr>a
 
 nnoremap <F5> :call Compile()<cr>
+nnoremap <F6> :call CompilePython3()<cr>
 nnoremap <c-j> :m+<cr>
 nnoremap <c-k> :m-2<cr>
 nnoremap <c-h> :tabp<cr>
@@ -148,10 +155,12 @@ let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 set laststatus=2
 let g:airline_theme='dark'
-let g:tagbar_left = 1
 
+let g:tagbar_left = 1
 nmap <F8> :TagbarToggle<CR>
 autocmd VimEnter * nested :TagbarOpen
+"autocmd FileType * nested :call tagbar#autoopen(0)
+"autocmd BufEnter * nested :call tagbar#autoopen(0)
 
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 colorscheme molokai
@@ -183,3 +192,4 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
+let g:EclimCompletionMethod = 'omnifunc'
