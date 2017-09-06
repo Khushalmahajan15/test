@@ -1,0 +1,5 @@
+break *main+0x01
+disable $bpnum
+break *magic+27
+disable $bpnum
+

@@ -1,0 +1,3 @@
+break *main+0x01
+break *magic+27
+
